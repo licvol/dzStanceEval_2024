@@ -2,12 +2,6 @@
 
 This project aims to perform stance detection on Arabic text using machine learning techniques. Stance detection involves identifying the attitude or perspective expressed in a piece of text towards a particular topic.
 
-## Usage
-
-To run this Python script, use the following command:
-
-python dzStance_StanceEval2024.py
-
 ## Overview
 
 The python script `dzStance_StanceEval2024.py` provides a step-by-step guide to:
@@ -36,15 +30,13 @@ The python script `dzStance_StanceEval2024.py` provides a step-by-step guide to:
 
 ## Usage
 
-1. Open the Jupyter Notebook `dzstance-mawqif_khalill.ipynb` in any Jupyter environment.
-2. Run the cells sequentially to execute the entire pipeline.
-3. Evaluate the model performance using the classification report generated.
-4. Use the trained model to make predictions on new data, such as the blind test dataset.
+To run this Python script, use the following command:
+
+python dzStance_StanceEval2024.py
 
 ## Requirements
 
 - Python 3
-- Jupyter Notebook
 - Required libraries: `pandas`, `scikit-learn`, `sentence-transformers`
 
 ## Dataset
@@ -54,6 +46,6 @@ The python script `dzStance_StanceEval2024.py` provides a step-by-step guide to:
 
 ## Credits
 
-- This project was developed by Mohamed LICHOURI, Khelil Rafik OUARAS and Khaled LOUNNAS.
+- This project was developed by dzStance Team in Stance Evaluation Shared Task.
 - The notebook makes use of the `sentence-transformers` library for generating text embeddings.
 
