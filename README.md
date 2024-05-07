@@ -2,6 +2,12 @@
 
 This project aims to perform stance detection on Arabic text using machine learning techniques. Stance detection involves identifying the attitude or perspective expressed in a piece of text towards a particular topic.
 
+## Usage
+
+To run this Python script, use the following command:
+
+python dzStance_StanceEval2024.py
+
 ## Overview
 
 The python script `dzStance_StanceEval2024.py` provides a step-by-step guide to:
