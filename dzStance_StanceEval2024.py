@@ -2,6 +2,7 @@
 
 """# **Libraries**"""
 
+# Importing necessary libraries
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
@@ -11,13 +12,14 @@ import pandas as pd
 
 """# **Read dataset**"""
 
+# Reading the dataset from a CSV file into a pandas DataFrame
 data = pd.read_csv("Mawqif_AllTargets_Train.csv", encoding="utf-8")
 
 """# **Normalisation**"""
 
-import re
-
+# Define functions for Arabic text normalization
 def normalize_arabic(text):
+    # Standardize Arabic characters
     text = re.sub("[إأآا]", "ا", text)
     text = re.sub("ى", "ي", text)
     text = re.sub("ؤ", "ء", text)
@@ -27,6 +29,7 @@ def normalize_arabic(text):
     return text
 
 def replace_emojis(text):
+    # Replace emojis with their Arabic equivalents
     emojis = {
         "\U0001F601": "فرح",
         "\U0001F602": "فرح",
@@ -111,29 +114,24 @@ data['text'] = data['text'].apply(replace_emojis)
 
 print(data['text'])
 
-"""# **Split data into training and developpement sets (70% train, 30% dev)**"""
+"""# **Split data into training and development sets (70% train, 30% dev)**"""
 
+# Extracting text and stance data from the DataFrame
 textData = data['text'].astype(str)
 stanceData = data['stance'].astype(str)
 
 # Convert stances to uppercase
 stanceData = [x.replace("nan", "None") for x in stanceData]
-stanceData =[x.upper() for x in stanceData]  # Uppercase stances
+stanceData =[x.upper() for x in stanceData] # Uppercase stances
 print(data.head(5))
 
 # Split data into training and testing sets (70% train, 30% test)
 X_train, X_dev, y_train, y_dev = train_test_split(textData, stanceData, test_size=0.3, random_state=42)
-test_ids = data.loc[X_dev.index, "ID"].tolist()  # Extract IDs for testing data
-test_topics = data.loc[X_dev.index, "target"].tolist()  # Extract topics for testing data
+test_ids = data.loc[X_dev.index, "ID"].tolist() # Extract IDs for testing data
+test_topics = data.loc[X_dev.index, "target"].tolist() # Extract topics for testing data
 
 # Load pre-trained model
 model = SentenceTransformer("xlm-r-100langs-bert-base-nli-stsb-mean-tokens")
-
-# Define models and corresponding tokenizers
-# "xlm-r-bert-base-nli-stsb-mean-tokens": This model is based on the XLM-RoBERTa architecture and is
-# fine-tuned for various tasks, including semantic textual similarity. It's pre-trained on a multilingual
-#  corpus, which includes Arabic.
-
 
 """# **Train Model**"""
 
@@ -168,7 +166,7 @@ with open("gold_labels.txt", "w", encoding="utf-8") as outfile:
 # Write predicted labels (IDs, topic as target, text, prediction) to a separate file
 with open("predictions.txt", "w", encoding="utf-8") as outfile:
     for i, (prediction, text) in enumerate(zip(y_pred.tolist(), X_dev)):
-        outfile.write(f"{test_ids[i]}\t{test_topics[i]}\t{text}\t{prediction}\n")  # Use topic for target
+        outfile.write(f"{test_ids[i]}\t{test_topics[i]}\t{text}\t{prediction}\n") # Use topic for target
 
 print("Stance prediction results with IDs, topics, and uppercase stances saved to separate files.")
 
@@ -177,13 +175,15 @@ print("Stance prediction results with IDs, topics, and uppercase stances saved t
 
 """**# Predict the blind data output**"""
 
+# Reading the blind test dataset from a CSV file
 blind = pd.read_csv("Mawqif_AllTargets_Blind Test.csv", encoding="utf-8")
 textDataBlind = blind['text'].astype(str)
 
-# Split data into training and testing sets (70% train, 30% test)
+# Extracting IDs and topics from the blind test dataset
 blind_ids = blind['ID'].astype(str)
 blind_topics = blind['target'].astype(str)
 
+# Encoding text data from the blind test dataset into embeddings
 X_blind_embeddings = model.encode(textDataBlind.tolist())
 
 # Predict labels for blind data
