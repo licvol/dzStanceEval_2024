@@ -32,7 +32,7 @@ The python script `dzStance_StanceEval2024.py` provides a step-by-step guide to:
 
 To run this Python script, use the following command:
 
-python dzStance_StanceEval2024.py
+`python dzStance_StanceEval2024.py`
 
 ## Requirements
 
